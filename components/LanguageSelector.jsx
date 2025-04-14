@@ -9,92 +9,70 @@ import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { GB, US, IN, FR, DE, ES, CN, JP } from "country-flag-icons/react/3x2";
-import { useGeoLocation } from "../lib/useGeoLocation";
 
 const languages = [
-  {
-    code: "en",
-    name: "English",
-    flag: <GB className="w-5 h-5" />,
-    countries: ["GB", "US", "AU"],
-  },
-  {
-    code: "fr",
-    name: "French",
-    flag: <FR className="w-5 h-5" />,
-    countries: ["FR", "BE", "CA"],
-  },
-  {
-    code: "de",
-    name: "German",
-    flag: <DE className="w-5 h-5" />,
-    countries: ["DE", "AT", "CH"],
-  },
-  {
-    code: "es",
-    name: "Spanish",
-    flag: <ES className="w-5 h-5" />,
-    countries: ["ES", "MX", "AR"],
-  },
-  {
-    code: "hi",
-    name: "Hindi",
-    flag: <IN className="w-5 h-5" />,
-    countries: ["IN"],
-  },
-  {
-    code: "zh",
-    name: "Chinese",
-    flag: <CN className="w-5 h-5" />,
-    countries: ["CN"],
-  },
-  {
-    code: "ja",
-    name: "Japanese",
-    flag: <JP className="w-5 h-5" />,
-    countries: ["JP"],
-  },
+  { code: "en", name: "English", flag: <GB className="w-5 h-5" />, countries: ["GB", "US", "AU"] },
+  { code: "fr", name: "French", flag: <FR className="w-5 h-5" />, countries: ["FR", "BE", "CA"] },
+  { code: "de", name: "German", flag: <DE className="w-5 h-5" />, countries: ["DE", "AT", "CH"] },
+  { code: "es", name: "Spanish", flag: <ES className="w-5 h-5" />, countries: ["ES", "MX", "AR"] },
+  { code: "hi", name: "Hindi", flag: <IN className="w-5 h-5" />, countries: ["IN"] },
+  { code: "zh", name: "Chinese", flag: <CN className="w-5 h-5" />, countries: ["CN"] },
+  { code: "ja", name: "Japanese", flag: <JP className="w-5 h-5" />, countries: ["JP"] },
 ];
 
 const currencies = [
-  {
-    code: "USD",
-    name: "US Dollar",
-    symbol: "$",
-    countries: ["US", "CA", "AU"],
-  },
+  { code: "USD", name: "US Dollar", symbol: "$", countries: ["US", "CA", "AU"] },
   { code: "INR", name: "Indian Rupee", symbol: "₹", countries: ["IN"] },
 ];
 
-const getDefaultSettings = (countryCode) => {
-  const defaultLanguage =
-    languages.find((lang) => lang.countries.includes(countryCode)) || languages[0];
-
-  // Force USD for all countries except India (IN)
-  const defaultCurrency =
-    countryCode === "IN"
-      ? currencies.find((curr) => curr.code === "INR")
-      : currencies.find((curr) => curr.code === "USD");
-
-  return { defaultLanguage, defaultCurrency };
-};
-
-
 export default function LanguageCurrencySelector() {
-  const { location, loading } = useGeoLocation();
   const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
   const [selectedCurrency, setSelectedCurrency] = useState(currencies[0]);
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (location?.country) {
-      const { defaultLanguage, defaultCurrency } = getDefaultSettings(
-        location.country
-      );
-      setSelectedLanguage(defaultLanguage);
-      setSelectedCurrency(defaultCurrency);
-    }
-  }, [location]);
+    const detectLocation = async () => {
+      try {
+        // Try multiple geolocation services as fallback
+        const services = [
+          'https://ipapi.co/json/',
+          'https://ipwho.is/',
+          'https://freeipapi.com/api/json'
+        ];
+
+        for (const service of services) {
+          try {
+            const response = await fetch(service);
+            const data = await response.json();
+            
+            if (data.country_code) {
+              const countryCode = data.country_code.toUpperCase();
+              const language = languages.find(lang => lang.countries.includes(countryCode)) || languages[0];
+              const currency = countryCode === "IN" 
+                ? currencies.find(curr => curr.code === "INR")
+                : currencies.find(curr => curr.code === "USD");
+              
+              setSelectedLanguage(language);
+              setSelectedCurrency(currency);
+              break;
+            }
+          } catch (err) {
+            console.log(`Failed with ${service}:`, err);
+            continue;
+          }
+        }
+      } catch (err) {
+        setError(err);
+        console.error('All geolocation attempts failed:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    detectLocation();
+  }, []);
 
   if (loading) {
     return (
