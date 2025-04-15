@@ -11,7 +11,7 @@ import { useGeoLocation } from "@/lib/useGeoLocation";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-export default function page() {
+export default function Page() {
   const params = useParams();
   const router = useRouter();
   const slug = params?.slug;
