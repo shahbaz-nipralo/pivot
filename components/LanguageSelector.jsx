@@ -8,42 +8,55 @@ import {
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import { GB, US, IN, FR, DE, ES, CN, JP } from "country-flag-icons/react/3x2";
+import { US, GB, IN, FR, DE, ES, CN, JP } from "country-flag-icons/react/3x2";
+import { countries } from "countries-list";
 import { useGeoLocation } from "../lib/useGeoLocation";
 
-const languages = [
-  { code: "en", name: "English", flag: <GB className="w-5 h-5" />, countries: ["GB", "US", "AU"] },
-  { code: "fr", name: "French", flag: <FR className="w-5 h-5" />, countries: ["FR", "BE", "CA"] },
-  { code: "de", name: "German", flag: <DE className="w-5 h-5" />, countries: ["DE", "AT", "CH"] },
-  { code: "es", name: "Spanish", flag: <ES className="w-5 h-5" />, countries: ["ES", "MX", "AR"] },
-  { code: "hi", name: "Hindi", flag: <IN className="w-5 h-5" />, countries: ["IN"] },
-  { code: "zh", name: "Chinese", flag: <CN className="w-5 h-5" />, countries: ["CN"] },
-  { code: "ja", name: "Japanese", flag: <JP className="w-5 h-5" />, countries: ["JP"] },
-];
+// Country flag components mapping
+const countryFlagComponents = {
+  US: US,
+  GB: GB,
+  IN: IN,
+  FR: FR,
+  DE: DE,
+  ES: ES,
+  CN: CN,
+  JP: JP,
+};
+
+// Convert countries object to array of supported countries
+const supportedCountries = Object.entries(countries)
+  .filter(([code]) => Object.keys(countryFlagComponents).includes(code))
+  .map(([code, country]) => ({
+    code,
+    name: country.name,
+    Flag: countryFlagComponents[code], // Using SVG flag component
+    currency: code === "IN" ? "INR" : "USD"
+  }));
 
 const currencies = [
-  { code: "USD", name: "US Dollar", symbol: "$", countries: ["US", "CA", "AU"] },
+  { code: "USD", name: "US Dollar", symbol: "$", countries: ["US", "GB", "FR", "DE", "ES", "JP"] },
   { code: "INR", name: "Indian Rupee", symbol: "₹", countries: ["IN"] },
 ];
 
 const getDefaultSettings = (countryCode) => {
-  const defaultLanguage = languages.find(lang => lang.countries.includes(countryCode)) || languages[0];
+  const defaultCountry = supportedCountries.find(c => c.code === countryCode) || supportedCountries[0];
   const defaultCurrency = countryCode === "IN" 
     ? currencies.find(curr => curr.code === "INR")
     : currencies.find(curr => curr.code === "USD");
-  return { defaultLanguage, defaultCurrency };
+  return { defaultCountry, defaultCurrency };
 };
 
-export default function LanguageCurrencySelector() {
+export default function CountryCurrencySelector() {
   const { location, loading } = useGeoLocation();
-  const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
+  const [selectedCountry, setSelectedCountry] = useState(supportedCountries[0]);
   const [selectedCurrency, setSelectedCurrency] = useState(currencies[0]);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (location?.country) {
-      const { defaultLanguage, defaultCurrency } = getDefaultSettings(location.country);
-      setSelectedLanguage(defaultLanguage);
+      const { defaultCountry, defaultCurrency } = getDefaultSettings(location.country);
+      setSelectedCountry(defaultCountry);
       setSelectedCurrency(defaultCurrency);
     }
   }, [location]);
@@ -72,9 +85,9 @@ export default function LanguageCurrencySelector() {
           onClick={() => setIsOpen(!isOpen)}
         >
           <div className="w-5 h-5 flex items-center justify-center">
-            {selectedLanguage.flag}
+            <selectedCountry.Flag className="w-full h-full" />
           </div>
-          <span>{selectedLanguage.name}</span>
+          <span>{selectedCountry.name}</span>
           <span className="text-gray-300">/</span>
           <span>
             {selectedCurrency.symbol}
@@ -87,30 +100,39 @@ export default function LanguageCurrencySelector() {
         <div className="text-center py-2">
           <p className="font-medium">Detected Location:</p>
           <p className="flex items-center justify-center gap-2 mt-1">
-            {selectedLanguage.flag}
-            <span>{location?.country_name || "Unknown"}</span>
+            <selectedCountry.Flag className="w-5 h-5" />
+            <span>{selectedCountry.name}</span>
           </p>
         </div>
 
         <div>
-          <h3 className="text-sm font-medium mb-2">Language</h3>
+          <h3 className="text-sm font-medium mb-2">Country</h3>
           <div className="grid grid-cols-2 gap-2">
-            {languages.map((lang) => (
-              <button
-                key={lang.code}
-                className={`flex items-center gap-2 p-2 rounded-md text-left cursor-pointer ${
-                  selectedLanguage.code === lang.code
-                    ? "bg-green-100 border"
-                    : "hover:bg-green-200"
-                }`}
-                onClick={() => setSelectedLanguage(lang)}
-              >
-                <div className="w-5 h-5 flex items-center justify-center">
-                  {lang.flag}
-                </div>
-                <span>{lang.name}</span>
-              </button>
-            ))}
+            {supportedCountries.map((country) => {
+              const CountryFlag = country.Flag;
+              return (
+                <button
+                  key={country.code}
+                  className={`flex items-center gap-2 p-2 rounded-md text-left cursor-pointer ${
+                    selectedCountry.code === country.code
+                      ? "bg-green-100 border"
+                      : "hover:bg-green-200"
+                  }`}
+                  onClick={() => {
+                    setSelectedCountry(country);
+                    const currency = country.code === "IN" 
+                      ? currencies.find(curr => curr.code === "INR")
+                      : currencies.find(curr => curr.code === "USD");
+                    setSelectedCurrency(currency);
+                  }}
+                >
+                  <div className="w-5 h-5 flex items-center justify-center">
+                    <CountryFlag className="w-full h-full" />
+                  </div>
+                  <span>{country.name}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
