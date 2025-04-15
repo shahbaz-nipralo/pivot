@@ -48,7 +48,10 @@ export default function Page() {
       price: discountedPriceValue,
       image: product.box_image.src,
     });
+  
+    toast.success(`${product.title} added to cart!`);
   };
+  
 
   const handleBuyNow = () => {
     // handleAddToCart();

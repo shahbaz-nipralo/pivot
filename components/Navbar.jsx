@@ -21,9 +21,9 @@ export default function Navbar() {
             <Image
               src="/images/pivotslogo.png" // Make sure extension is correct
               alt="PivotExcels Logo"
-              width={120}
-              height={40}
-              className="h-10 w-auto"
+              width={180}
+              height={60}
+              className="h-16 w-auto"
             />
           </Link>
 
