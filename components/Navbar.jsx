@@ -6,6 +6,7 @@ import { FiSearch, FiUser, FiShoppingBag, FiMenu, FiX } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
 import LanguageCurrencySelector from "./LanguageSelector";
 import { useCart } from "@/context/CartContext"; // Import the useCart hook
+import Image from "next/image";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -16,14 +17,15 @@ export default function Navbar() {
       <div className="container mx-auto px-2 lg:px-22 flex items-center justify-between h-20">
         {/* Logo */}
         <div className="flex items-center space-x-8">
-        <Link href="/" className="flex items-center">
-  <img
-    src="/images/pivots logo" // <-- replace with your actual image path
+          <Link href="/" className="flex items-center">
+          <Image
+    src="/images/pivotslogo.png" // Make sure extension is correct
     alt="PivotExcels Logo"
+    width={120}
+    height={40}
     className="h-10 w-auto"
   />
-</Link>
-
+          </Link>
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center space-x-6">
