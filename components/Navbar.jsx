@@ -18,13 +18,13 @@ export default function Navbar() {
         {/* Logo */}
         <div className="flex items-center space-x-8">
           <Link href="/" className="flex items-center">
-          <Image
-    src="/images/pivotslogo.png" // Make sure extension is correct
-    alt="PivotExcels Logo"
-    width={120}
-    height={40}
-    className="h-10 w-auto"
-  />
+            <Image
+              src="/images/pivotslogo.png" // Make sure extension is correct
+              alt="PivotExcels Logo"
+              width={120}
+              height={40}
+              className="h-10 w-auto"
+            />
           </Link>
 
           {/* Desktop nav */}

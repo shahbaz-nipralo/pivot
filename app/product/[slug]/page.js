@@ -8,7 +8,8 @@ import Link from "next/link";
 import products from "@/lib/data";
 import { useCart } from "@/context/CartContext";
 import { useGeoLocation } from "@/lib/useGeoLocation";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function page() {
   const params = useParams();
@@ -69,10 +70,12 @@ export default function page() {
 
       <div className="grid md:grid-cols-2 gap-10 items-start">
         <div className="w-full">
-          <img
+          <Image
             src={product.box_image.src}
             alt={product.title}
-            className="w-full"
+            width={600} // customize as needed
+            height={400} // customize as needed
+            className="w-full object-contain"
           />
         </div>
 

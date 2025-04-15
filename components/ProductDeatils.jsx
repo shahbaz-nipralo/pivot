@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useGeoLocation } from "../lib/useGeoLocation";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ProductDetails() {
   const { location, loading } = useGeoLocation();
@@ -34,13 +35,13 @@ export default function ProductDetails() {
       {/* Main Content */}
       <div className="grid md:grid-cols-2 gap-10 items-start">
         {/* Product Image */}
-        <div className="w-full">
-          <img
-            src="/images/excel_templates.webp"
-            alt="Excel & Google Sheets Templates Bundle"
-            className="w-full"
-          />
-        </div>
+        <Image
+          src="/images/excel_templates.webp"
+          alt="Excel & Google Sheets Templates Bundle"
+          width={800} // you can adjust this
+          height={600} // adjust proportionally
+          className="w-full h-auto"
+        />
 
         {/* Product Info */}
         <div className="space-y-5">

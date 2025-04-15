@@ -1,7 +1,8 @@
-'use client'
+"use client";
 import { useEffect, useState } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import products from "@/lib/data";
+import Image from "next/image";
 
 function ProductCard() {
   const [isClient, setIsClient] = useState(false);
@@ -33,9 +34,11 @@ function ProductCard() {
               className="bg-white cursor-pointer rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
             >
               <div className="relative">
-                <img
+                <Image
                   src={item.product.box_image.src}
                   alt={item.product.title}
+                  width={300} // customize as needed
+                  height={192} // corresponds to h-48 (48 x 4 = 192px)
                   className="w-full h-48 object-contain bg-white"
                 />
               </div>
