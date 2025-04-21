@@ -38,10 +38,10 @@ const currencies = [
   { code: "USD", name: "US Dollar", symbol: "$", countries: ["US", "GB", "FR", "DE", "ES", "JP"] },
   { code: "INR", name: "Indian Rupee", symbol: "₹", countries: ["IN"] },
 ];
-
 const getDefaultSettings = (countryCode) => {
-  const defaultCountry = supportedCountries.find(c => c.code === countryCode) || supportedCountries[0];
-  const defaultCurrency = countryCode === "IN" 
+  // Always set default country to India (IN)
+  const defaultCountry = supportedCountries.find(c => c.code === countryCode) || supportedCountries.find(c => c.code === "IN");
+  const defaultCurrency = defaultCountry.code === "IN" 
     ? currencies.find(curr => curr.code === "INR")
     : currencies.find(curr => curr.code === "USD");
   return { defaultCountry, defaultCurrency };
@@ -49,8 +49,8 @@ const getDefaultSettings = (countryCode) => {
 
 export default function CountryCurrencySelector() {
   const { location, loading } = useGeoLocation();
-  const [selectedCountry, setSelectedCountry] = useState(supportedCountries[0]);
-  const [selectedCurrency, setSelectedCurrency] = useState(currencies[0]);
+  const [selectedCountry, setSelectedCountry] = useState(supportedCountries.find(c => c.code === "IN")); // Set default to India
+  const [selectedCurrency, setSelectedCurrency] = useState(currencies.find(curr => curr.code === "INR")); // Set default currency to INR
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {

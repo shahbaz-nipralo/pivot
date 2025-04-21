@@ -1,5 +1,5 @@
-"use client";
-
+'use client'
+// Updated CartContext.js
 import { createContext, useContext, useState, useEffect } from "react";
 
 const CartContext = createContext(undefined);
@@ -30,28 +30,19 @@ export function CartProvider({ children }) {
 
   const addItem = (newItem) => {
     setItems((currentItems) => {
-      // Check if item already exists in cart
-      const existingItemIndex = currentItems.findIndex(
-        (item) => item.id === newItem.id
-      );
-  
-      if (existingItemIndex >= 0) {
-        // If exists, update quantity
-        const updatedItems = [...currentItems];
-        updatedItems[existingItemIndex] = {
-          ...updatedItems[existingItemIndex],
-          quantity: updatedItems[existingItemIndex].quantity + 1,
-        };
-        return updatedItems;
-      } else {
-        // If new item, add to cart with quantity 1
-        return [...currentItems, { ...newItem, quantity: 1 }];
-      }
+      const itemWithUniqueId = {
+        ...newItem,
+        uniqueId: `${newItem.id}-${Date.now()}`,
+        quantity: 1,
+      };
+      return [...currentItems, itemWithUniqueId];
     });
   };
 
-  const removeItem = (id) => {
-    setItems((currentItems) => currentItems.filter((item) => item.id !== id));
+  const removeItem = (uniqueId) => {
+    setItems((currentItems) =>
+      currentItems.filter((item) => item.uniqueId !== uniqueId)
+    );
   };
 
   const updateQuantity = (id, quantity) => {
@@ -68,23 +59,38 @@ export function CartProvider({ children }) {
     setItems([]);
   };
 
-  const totalItems = items.reduce((total, item) => total + item.quantity, 0);
-  const totalPrice = items.reduce((total, item) => total + item.price * item.quantity, 0);
+  // Simplified and more reliable total price calculation
+  const totalPrice = items.reduce((sum, item) => {
+    let priceValue = 0;
+    
+    if (typeof item.price === 'number') {
+      priceValue = item.price;
+    } else if (typeof item.price === 'string') {
+      // Extract numeric value from string (remove currency symbols)
+      priceValue = parseFloat(item.price.replace(/[^0-9.-]/g, '')) || 0;
+    } else if (item.price?.discounted_price) {
+      priceValue = parseFloat(item.price.discounted_price) || 0;
+    } else if (item.price?.original_price) {
+      priceValue = parseFloat(item.price.original_price) || 0;
+    }
+
+    return sum + (priceValue * (item.quantity || 1));
+  }, 0);
 
   return (
     <CartContext.Provider
-    value={{
-      items,
-      addItem,
-      removeItem,
-      updateQuantity,
-      clearCart,
-      totalItems: items.reduce((total, item) => total + item.quantity, 0),
-      totalPrice: items.reduce((total, item) => total + item.price * item.quantity, 0),
-    }}
-  >
-    {children}
-  </CartContext.Provider>
+      value={{
+        items,
+        addItem,
+        removeItem,
+        updateQuantity,
+        clearCart,
+        totalItems: items.reduce((total, item) => total + (item.quantity || 1), 0),
+        totalPrice,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
   );
 }
 
