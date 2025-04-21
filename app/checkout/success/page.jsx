@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-export default function SuccessPage() {
+function SuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
   const [session, setSession] = useState(null);
@@ -20,7 +20,7 @@ export default function SuccessPage() {
 
       try {
         const response = await fetch(
-           `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/stripe-session?session_id=${sessionId}`
+          `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/stripe-session?session_id=${sessionId}`
         );
         const data = await response.json();
 
@@ -75,6 +75,18 @@ export default function SuccessPage() {
         <a href="/" style={styles.button}>Go to Homepage</a>
       </div>
     </div>
+  );
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={
+      <div style={styles.container}>
+        <p style={styles.loading}>Loading...</p>
+      </div>
+    }>
+      <SuccessContent />
+    </Suspense>
   );
 }
 
