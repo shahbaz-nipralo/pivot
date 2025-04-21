@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { loadStripe } from '@stripe/stripe-js';
 
 export default function SuccessPage() {
   const searchParams = useSearchParams();
@@ -20,20 +19,24 @@ export default function SuccessPage() {
       }
 
       try {
-        // Load Stripe.js
-        const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || 'pk_test_51RF7PyCSD4ytQu4Db2kj5JSCCtHe2Ts1cZTPZMmZaW55064nTXL0kVfbA13IXeOOwYGRYZEv6F7WTj9Yz4hV3oAl00Spay1hOH');
-        
-        // Retrieve the session
-        const session = await stripe.checkout.sessions.retrieve(sessionId);
-        setSession(session);
+        const response = await fetch(
+           `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/stripe-session?session_id=${sessionId}`
+        );
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to fetch session');
+        }
+
+        setSession(data);
       } catch (err) {
-        console.error('Error fetching Stripe session:', err);
+        console.error('Error fetching session from Strapi:', err);
         setError('Failed to load payment details');
       } finally {
         setLoading(false);
       }
     };
-    
+
     fetchSessionDetails();
   }, [sessionId]);
 
@@ -47,18 +50,11 @@ export default function SuccessPage() {
 
   if (error) {
     return (
-        <div style={styles.container}>
+      <div style={styles.container}>
         <div style={styles.card}>
-          <h1 style={styles.title}>🎉 Payment Successful!</h1>
-          <p style={styles.message}>
-            Thank you for your purchase! Your payment has been successfully processed.
-          </p>
-          <p style={styles.message}>
-            We've sent a confirmation to your email (if provided).
-          </p>
-          <a href="/" style={styles.button}>
-            Go to Homepage
-          </a>
+          <h1 style={styles.title}>⚠️ Error</h1>
+          <p style={styles.message}>{error}</p>
+          <a href="/" style={styles.button}>Go to Homepage</a>
         </div>
       </div>
     );
@@ -71,12 +67,12 @@ export default function SuccessPage() {
         <p style={styles.message}>
           Thank you for your purchase! Your payment has been successfully processed.
         </p>
-        <p style={styles.message}>
-          We've sent a confirmation to your email (if provided).
-        </p>
-        <a href="/" style={styles.button}>
-          Go to Homepage
-        </a>
+        {session?.customer_email && (
+          <p style={styles.message}>
+            A confirmation has been sent to <strong>{session.customer_email}</strong>.
+          </p>
+        )}
+        <a href="/" style={styles.button}>Go to Homepage</a>
       </div>
     </div>
   );
@@ -123,9 +119,5 @@ const styles = {
     color: '#fff',
     borderRadius: '8px',
     textDecoration: 'none',
-    transition: 'background-color 0.3s ease',
-    '&:hover': {
-      backgroundColor: '#2c5282',
-    },
   },
 };
