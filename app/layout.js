@@ -3,6 +3,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { CartProvider } from "@/context/CartContext";
 import { Toaster } from "sonner";
+import { UserProvider } from '@auth0/nextjs-auth0';
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,11 +27,13 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <UserProvider>
         <CartProvider>
         <Navbar />
         {children}
         <Toaster richColors />
         </CartProvider>
+        </UserProvider>
       </body>
     </html>
   );
