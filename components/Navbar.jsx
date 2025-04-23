@@ -43,6 +43,13 @@ export default function Navbar() {
             >
               Contact 24/7
             </Link>
+
+            <Link
+              href="/products"
+              className="text-gray-600 hover:border-b border-black"
+            >
+              Products
+            </Link>
           </div>
         </div>
 
