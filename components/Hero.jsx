@@ -26,6 +26,8 @@ export default function Hero() {
             Know More
           </Button>
           </Link>
+          <a href="/api/auth/login">Login</a>
+          <a href="/api/auth/logout">Logout</a>
         </div>
 
         <div className="relative">
