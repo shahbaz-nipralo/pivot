@@ -29,7 +29,7 @@ export default function Testimonials() {
           <div className="space-y-2">
             <h2 className="text-3xl font-semibold tracking-tighter sm:text-4xl md:text-5xl text-[rgb(47,102,134)]">
               What Our Customers Say
-            </h2
+            </h2>
             <p className="max-w-[900px] text-gray-600 md:text-xl">
               Don't just take our word for it, hear from our satisfied customers!
             </p>
