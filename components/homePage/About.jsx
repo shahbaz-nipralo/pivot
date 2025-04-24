@@ -1,10 +1,4 @@
-import {
-  BarChart2,
-  FileSpreadsheet,
-  Users,
-  Award,
-  Target,
-} from "lucide-react";
+import { BarChart2, FileSpreadsheet, Users, Award, Target } from "lucide-react";
 
 export default function AboutUs() {
   return (
@@ -13,37 +7,24 @@ export default function AboutUs() {
         <div className="grid gap-16 lg:grid-cols-2 items-center">
           {/* Text Content */}
           <div className="space-y-6">
-         
             <h2 className="text-4xl font-extrabold tracking-tight text-[#2F6686] sm:text-5xl">
               About Us
             </h2>
             <p className="text-base text-gray-600 sm:text-lg">
-              At ExcelHub, our mission is to make Excel easy and accessible for everyone. We believe that powerful data
-              analysis and organization shouldn't require advanced technical skills.
+              At ExcelHub, our mission is to make Excel easy and accessible for
+              everyone. We believe that powerful data analysis and organization
+              shouldn't require advanced technical skills.
             </p>
             <p className="text-base text-gray-600 sm:text-lg">
-              Our team of Excel experts creates professionally designed templates that help you save time, increase
-              productivity, and achieve professional results without the learning curve.
-            </p>
-            <p className="text-base text-gray-600 sm:text-lg">
-              Whether you're a business professional, student, or just someone looking to organize their finances, our
-              templates provide the perfect starting point for your Excel journey.
+              Our team of Excel experts creates professionally designed
+              templates that help you save time, increase productivity, and
+              achieve professional results without the learning curve.
             </p>
           </div>
 
           {/* Feature Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {[
-              {
-                icon: FileSpreadsheet,
-                title: "140+ Templates",
-                desc: "Professionally designed Excel templates for every need",
-              },
-              {
-                icon: BarChart2,
-                title: "Data-Driven",
-                desc: "Templates built with analytics and insights in mind",
-              },
               {
                 icon: Award,
                 title: "Expert Designed",
@@ -53,6 +34,16 @@ export default function AboutUs() {
                 icon: Target,
                 title: "Goal Oriented",
                 desc: "Focused on helping you achieve your objectives",
+              },
+              {
+                icon: FileSpreadsheet,
+                title: "140+ Templates",
+                desc: "Professionally designed Excel templates for every need",
+              },
+              {
+                icon: BarChart2,
+                title: "Data-Driven",
+                desc: "Templates built with analytics and insights in mind",
               },
             ].map(({ icon: Icon, title, desc }, index) => (
               <div

@@ -42,37 +42,47 @@ function SuccessContent() {
 
   if (loading) {
     return (
-      <div style={styles.container}>
-        <p style={styles.loading}>Loading your payment info...</p>
+      <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+        <p className="text-lg text-gray-600">Loading your payment info...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div style={styles.container}>
-        <div style={styles.card}>
-          <h1 style={styles.title}>⚠️ Error</h1>
-          <p style={styles.message}>{error}</p>
-          <a href="/" style={styles.button}>Go to Homepage</a>
+      <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+        <div className="bg-white rounded-xl shadow-lg p-8 max-w-md w-full text-center">
+          <h1 className="text-2xl font-semibold text-red-600 mb-4">⚠️ Error</h1>
+          <p className="text-gray-700 mb-4">{error}</p>
+          <a
+            href="/"
+            className="inline-block mt-4 px-6 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+          >
+            Go to Homepage
+          </a>
         </div>
       </div>
     );
   }
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h1 style={styles.title}>🎉 Payment Successful!</h1>
-        <p style={styles.message}>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+      <div className="bg-white rounded-xl shadow-lg p-8 max-w-md w-full text-center">
+        <h1 className="text-2xl font-semibold text-green-600 mb-4">🎉 Payment Successful!</h1>
+        <p className="text-gray-700 mb-2">
           Thank you for your purchase! Your payment has been successfully processed.
         </p>
         {session?.customer_email && (
-          <p style={styles.message}>
+          <p className="text-gray-700">
             A confirmation has been sent to <strong>{session.customer_email}</strong>.
           </p>
         )}
-        <a href="/" style={styles.button}>Go to Homepage</a>
+        <a
+          href="/"
+          className="inline-block mt-6 px-6 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+        >
+          Go to Homepage
+        </a>
       </div>
     </div>
   );
@@ -80,56 +90,14 @@ function SuccessContent() {
 
 export default function SuccessPage() {
   return (
-    <Suspense fallback={
-      <div style={styles.container}>
-        <p style={styles.loading}>Loading...</p>
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+          <p className="text-lg text-gray-600">Loading...</p>
+        </div>
+      }
+    >
       <SuccessContent />
     </Suspense>
   );
 }
-
-const styles = {
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
-    backgroundColor: '#f0f4f8',
-    padding: '1rem',
-  },
-  card: {
-    backgroundColor: '#fff',
-    borderRadius: '12px',
-    padding: '2rem',
-    maxWidth: '500px',
-    width: '100%',
-    boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
-    textAlign: 'center',
-  },
-  title: {
-    fontSize: '2rem',
-    marginBottom: '1rem',
-    color: '#2d3748',
-  },
-  message: {
-    fontSize: '1.1rem',
-    margin: '0.5rem 0',
-    color: '#4a5568',
-  },
-  loading: {
-    fontSize: '1.2rem',
-    color: '#555',
-  },
-  button: {
-    display: 'inline-block',
-    marginTop: '1.5rem',
-    padding: '0.75rem 1.5rem',
-    fontSize: '1rem',
-    backgroundColor: '#3182ce',
-    color: '#fff',
-    borderRadius: '8px',
-    textDecoration: 'none',
-  },
-};

@@ -39,7 +39,7 @@ export default function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="flex flex-col rounded-xl border bg-white p-6 shadow-lg transition-transform duration-300 hover:scale-105"
+              className="flex flex-col rounded-xl border bg-white p-4 shadow-lg transition-transform duration-300 hover:scale-105"
             >
               <div className="flex items-center space-x-4">
                 <div className="relative h-16 w-16 rounded-full bg-gray-200 flex items-center justify-center">

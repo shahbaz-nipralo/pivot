@@ -19,8 +19,8 @@ export default function Faq() {
         </div>
 
         <Accordion type="single" collapsible className="w-full space-y-2">
-          <AccordionItem value="item-1">
-            <AccordionTrigger className="text-left text-base md:text-lg font-medium">
+          <AccordionItem value="item-1" className="border-none">
+            <AccordionTrigger className="text-left text-base md:text-lg font-medium cursor-pointer">
               Do I need to be an Excel expert to use these templates?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 text-sm sm:text-base">
@@ -28,8 +28,8 @@ export default function Faq() {
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-2">
-            <AccordionTrigger className="text-left text-base md:text-lg font-medium">
+          <AccordionItem value="item-2" className="border-none">
+            <AccordionTrigger className="text-left text-base md:text-lg font-medium cursor-pointer">
               Can I customize the templates to fit my specific needs?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 text-sm sm:text-base">
@@ -37,8 +37,8 @@ export default function Faq() {
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-3">
-            <AccordionTrigger className="text-left text-base md:text-lg font-medium">
+          <AccordionItem value="item-3" className="border-none">
+            <AccordionTrigger className="text-left text-base md:text-lg font-medium cursor-pointer">
               What versions of Excel are your templates compatible with?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 text-sm sm:text-base">
@@ -46,8 +46,8 @@ export default function Faq() {
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-4">
-            <AccordionTrigger className="text-left text-base md:text-lg font-medium">
+          <AccordionItem value="item-4" className="border-none">
+            <AccordionTrigger className="text-left text-base md:text-lg font-medium cursor-pointer">
               Do you offer refunds if I'm not satisfied?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 text-sm sm:text-base">
@@ -55,8 +55,8 @@ export default function Faq() {
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-5">
-            <AccordionTrigger className="text-left text-base md:text-lg font-medium">
+          <AccordionItem value="item-5" className="border-none">
+            <AccordionTrigger className="text-left text-base md:text-lg font-medium cursor-pointer">
               How do I receive the templates after purchase?
             </AccordionTrigger>
             <AccordionContent className="text-gray-600 text-sm sm:text-base">
