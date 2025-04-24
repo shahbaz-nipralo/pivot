@@ -4,7 +4,7 @@ export default function Contact() {
   return (
     <section id="contact" className="w-full py-12 md:py-5 bg-white">
       <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center mb-10">
+        <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8">
           <div className="space-y-2">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-[#2F6686]">Get In Touch</h2>
             <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed">

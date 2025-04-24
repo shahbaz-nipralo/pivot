@@ -22,12 +22,12 @@ export default function Hero() {
               <Button className="bg-[#2F6686] hover:bg-[#245573] text-white text-lg px-8 py-6">
                 Browse Templates
               </Button>
-              <Button
+              {/* <Button
                 variant="outline"
                 className="border-[#2F6686] text-[#2F6686] hover:bg-[#2F6686]/10 text-lg px-8 py-6"
               >
                 Learn More
-              </Button>
+              </Button> */}
             </div>
           </div>
 
