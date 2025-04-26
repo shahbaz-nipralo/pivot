@@ -34,7 +34,7 @@ export function UserPanel() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto mt-4">
+    <div className="max-w-3xl mx-auto mt-14">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">My Account</h1>
         <Button variant="destructive" onClick={handleLogout} className="bg-red-500 hover:bg-red-600">

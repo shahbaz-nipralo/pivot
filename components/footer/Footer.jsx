@@ -21,10 +21,10 @@ export default function Footer() {
           &copy; {new Date().getFullYear()} Pivots. All rights reserved.
         </p>
         <div className="flex gap-4">
-          <Link href="#" className="text-sm text-gray-500 hover:text-[#2F6686]">
+          <Link href="/privacy-policy" className="text-sm text-gray-500 hover:text-[#2F6686]">
             Privacy Policy
           </Link>
-          <Link href="#" className="text-sm text-gray-500 hover:text-[#2F6686]">
+          <Link href="terms-services" className="text-sm text-gray-500 hover:text-[#2F6686]">
             Terms of Service
           </Link>
         </div>

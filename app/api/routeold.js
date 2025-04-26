@@ -4,9 +4,6 @@ export default async function handler(req, res) {
       return res.status(405).json({ message: 'Method not allowed' });
     }
   
-    // Optional: Verify the request is coming from an authenticated user
-    // You might want to add additional verification here
-  
     try {
       const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
       const STRAPI_API_TOKEN = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;

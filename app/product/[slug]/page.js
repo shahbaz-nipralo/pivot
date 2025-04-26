@@ -32,7 +32,7 @@ export default function Page() {
   const { title, price, tags, included } = product;
 
   return (
-    <div className="max-w-6xl mx-auto p-4 mt-1">
+    <div className="max-w-6xl mx-auto p-4 mt-24">
       {/* Back Button */}
       <div className="mb-4">
         <Link
