@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FiSearch, FiShoppingBag, FiMenu, FiX } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
-import LanguageCurrencySelector from "../LanguageSelector";
+import LanguageCurrencySelector from "./LanguageSelector";
 import { useCart } from "@/context/CartContext";
 import SearchBar from "./SearchBar";
 import AuthSection from "./AuthSection";

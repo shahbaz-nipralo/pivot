@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 export default function CartPage() {
   const {
@@ -20,7 +21,7 @@ export default function CartPage() {
 
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
+  const { user } = useUser();
   function formatCurrency(amount) {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
@@ -30,6 +31,12 @@ export default function CartPage() {
   }
 
   const handleCheckout = async () => {
+    if (!user) {
+      router.push("/api/auth/login");
+    // } else {
+    //   // proceed to checkout page
+    //   router.push("/checkout");
+    }
     if (totalItems === 0) {
       alert("Your cart is empty.");
       return;

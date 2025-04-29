@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { US, GB, IN, FR, DE, ES, CN, JP } from "country-flag-icons/react/3x2";
 import { countries } from "countries-list";
-import { useGeoLocation } from "../lib/useGeoLocation";
+import { useGeoLocation } from "@/lib/useGeoLocation";
 
 // Country flag components mapping
 const countryFlagComponents = {

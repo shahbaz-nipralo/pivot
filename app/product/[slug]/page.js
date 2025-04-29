@@ -10,7 +10,7 @@ import { useGeoLocation } from "@/lib/useGeoLocation";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useProduct } from "@/lib/useProduct";
-import { useProductDisplay } from "@/lib/useProductDisplay";
+import { useProductDisplay } from "@/lib/useProductFunc";
 
 export default function Page() {
   const params = useParams();

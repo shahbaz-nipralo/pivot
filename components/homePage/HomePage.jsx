@@ -1,5 +1,4 @@
 import React from "react";
-import Hero from "./Hero";
 import KeyBenefits from "./KeyBenefits";
 import AboutUs from "./About";
 import Categories from "./Categories";
